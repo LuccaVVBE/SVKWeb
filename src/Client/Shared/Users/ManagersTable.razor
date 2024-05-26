@@ -1,0 +1,68 @@
+﻿@using Svk.Shared.Users
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<MudDataGrid Items="@_managers"
+             T="ManagerDto.Index"
+             data-cy="dataGrid"
+             Filterable="_filterable" Hover="_hover"
+             Striped="_striped" CurrentPage="_currentPage"
+             Loading="_isLoading" RowsPerPage="_rowsPerPage"
+             SortMode="_sortMode" EditMode="DataGridEditMode.Form"
+             ReadOnly="false"
+             StartedEditingItem="@StartedEditingItem"
+             CanceledEditingItem="@CanceledEditingItem"
+             CommittedItemChanges="@CommittedItemChanges"
+             EditTrigger="@DataGridEditTrigger.Manual"
+             MultiSelection="_MultiSelection"
+             ServerData="@LoadGridData"
+             @ref="_grid">
+
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Managers</MudText>
+        <MudSpacer/>
+        <MudTextField @bind-Value="_searchString" Placeholder="Zoek" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+        </MudTextField>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="HandelUserFilterChanged">ZOEK</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Style="margin-left:5px" OnClick="@OpenDialog">MANAGER TOEVOEGEN</MudButton>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="x => x.Id" Title="Nr" IsEditable="false" Filterable="false"/>
+        <PropertyColumn Property="x => x.Name" Title="Naam"/>
+        <PropertyColumn Property="x => x.Email" Title="Email" Filterable="false"/>
+        <TemplateColumn CellClass="d-flex justify-end" Filterable="false">
+            <CellTemplate Context="cellContext">
+                <CascadingAuthenticationState>
+                    <AuthorizeView Context="authContext">
+                        <Authorized>
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@cellContext.Actions.StartEditingItemAsync"/>
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete" OnClick="() => StartDeleteItemAsync(cellContext.Item, authContext.User.Identity.Name)"/>
+                        </Authorized>
+                    </AuthorizeView>
+                </CascadingAuthenticationState>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="ManagerDto.Index"/>
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions()
+        {
+            CloseButton = true,
+            CloseOnEscapeKey = true
+        };
+        var parameters = new DialogParameters();
+        parameters.Add("grid", _grid);
+
+        DialogService.Show<ManagerDialog>("Voeg manager toe", parameters, options);
+    }
+
+}

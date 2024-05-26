@@ -1,0 +1,49 @@
+@inject HttpClient httpClient
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
+
+<Filter FilterChanged="HandelFilterChanged" FiltersLoaded="@FiltersLoaded"/>
+<MudDivider Class="my-4" Style="border: solid 2px rgba(224,224,224,1); border-radius: 5px"/>
+<MudDataGrid data-cy="dataGrid"
+             SortMode="_sortMode"
+             Hover="_hover"
+             Striped="_striped"
+             CurrentPage="@_currentPage"
+             Loading="_isLoading" RowsPerPage="_rowsPerPage" RowClick="@RowClicked"
+             ServerData="@LoadGridData"
+             @ref="_controleGrid"
+             T="extendedControleDto">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6" data-cy="title">Uitgevoerde Controles</MudText>
+    </ToolBarContent>
+    <Columns>
+        <HierarchyColumn></HierarchyColumn>
+        <PropertyColumn Property="x => x.Id" Title="Nr" T="extendedControleDto" TProperty="int" data-cy="columnId"/>
+        <PropertyColumn Property="x => x.RouteNummersString" T="extendedControleDto" Title="RouteNummers" TProperty="string" data-cy="columnRouteNummers"/>
+        <PropertyColumn Property="x => x.Transporteur" T="extendedControleDto" TProperty="string" data-cy="columnTransporteur"/>
+        <PropertyColumn Property="x => x.Nummerplaat" T="extendedControleDto" TProperty="string" data-cy="columnNummerplaat"/>
+        <PropertyColumn Property="x => x.Datum" T="extendedControleDto" TProperty="DateTime" Format="dd/MM/yyyy HH:mm" data-cy="columnDatum"/>
+    </Columns>
+    <ChildRowContent>
+        <MudCard data-cy="card">
+            <MudCardContent>
+                <MudText Typo="Typo.h6" data-cy="laadbonnummersTitle">Laadbonnummers:</MudText>
+                @*TODO check and fix *@
+                @foreach (var item in @context.Item.Laadbonnummers)
+                {
+                    <MudText data-cy="@($"laadbonnummer-{item}")">@item</MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+    </ChildRowContent>
+    <PagerContent>
+
+        <MudDataGridPager T="extendedControleDto" PageSizeOptions="_pageSizeOptions" data-cy="pager"/>
+
+    </PagerContent>
+    @* TODO add data-cy *@
+    <NoRecordsContent >
+        Nothing Found
+    </NoRecordsContent>
+</MudDataGrid>

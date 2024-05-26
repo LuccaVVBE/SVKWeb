@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Svk.Fakers</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Bogus" Version="34.0.2" />
+        <PackageReference Include="Minio" Version="6.0.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Domain\Svk.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Images\8.jpg" />
+      <None Remove="Images\7.jpg" />
+      <None Remove="Images\6.jpg" />
+      <None Remove="Images\5.jpg" />
+      <None Remove="Images\4.jpg" />
+      <None Remove="Images\3.jpg" />
+      <None Remove="Images\21.jpg" />
+      <None Remove="Images\20.jpg" />
+      <None Remove="Images\2.jpg" />
+      <None Remove="Images\19.jpg" />
+      <None Remove="Images\18.jpg" />
+      <None Remove="Images\17.jpg" />
+      <None Remove="Images\16.jpg" />
+      <None Remove="Images\15.jpg" />
+      <None Remove="Images\14.jpg" />
+      <None Remove="Images\13.jpg" />
+      <None Remove="Images\12.jpg" />
+      <None Remove="Images\11.jpg" />
+      <None Remove="Images\10.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Images\" />
+    </ItemGroup>
+
+</Project>

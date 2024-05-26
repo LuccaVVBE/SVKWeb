@@ -1,0 +1,20 @@
+<MudDialog IsOpen="@_dialogIsOpen">
+    <DialogContent>
+        <MudForm>
+            @if (!_isCreatingUser)
+            {
+                <MudTextField @bind-Value="@Loader.Name" Label="Name"/>
+                <MudTextField @bind-Value="@Loader.Email" Label="Email" For="@(() => Loader.Email)"/>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Submit">Create</MudButton>
+            }
+            else
+            {
+                <MudTextField @bind-Value="@_result" ReadOnly="true" Label="Created password"/>
+            }
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+

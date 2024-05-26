@@ -1,0 +1,32 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: max-content">
+                        <MudText Typo="Typo.h4">Inloggen wordt afgehandeld...</MudText>
+                    </div>
+                </Authorizing>
+                <NotAuthorized>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: max-content">
+                        <MudText Typo="Typo.h4">Sorry</MudText>
+                        <MudText Typo="Typo.h5">Je bent niet ingelogd of je hebt geen machtiging tot deze pagina.</MudText>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="authentication/login">Log in</MudButton>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: max-content" role="alert">
+                    <MudText Typo="Typo.h4">404 - Pagina niet gevonden</MudText>
+                    <MudText Typo="Typo.h6">De pagina die je probeerde te bereiken is niet beschikbaar.</MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/">Terug naar homepage</MudButton>
+                </div>
+                @*<p role="alert">Sorry, there's nothing at this address.</p>*@
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

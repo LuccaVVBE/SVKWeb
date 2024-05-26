@@ -1,0 +1,7 @@
+﻿@page "/"
+@page "/home"
+@page "/controles"
+@using Svk.Client.Shared.Controles
+@attribute [Authorize(Roles = "Manager")]
+<PageTitle>Controles</PageTitle>
+<ControleTable/>

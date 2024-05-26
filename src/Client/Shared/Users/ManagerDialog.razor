@@ -1,0 +1,17 @@
+<MudDialog IsOpen="@_dialogIsOpen">
+    <DialogContent>
+        <MudForm>
+            @if (!_isCreatingManager)
+            {
+                <MudTextField @bind-Value="@Manager.Name" Label="Name"/>
+                <MudTextField @bind-Value="@Manager.Email" Label="Email" For="@(() => Manager.Email)"/>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Submit">Create</MudButton>
+            }
+            else
+            {
+                <MudTextField @bind-Value="@_result" ReadOnly="true" Label="Created password"/>
+            }
+        </MudForm>
+    </DialogContent>
+
+</MudDialog>

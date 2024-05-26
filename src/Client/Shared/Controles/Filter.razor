@@ -1,0 +1,32 @@
+﻿@inject NavigationManager Navigation;
+
+<MudDateRangePicker @ref="_filterData._datePicker" Label="Periode" @bind-DateRange="_filterData._datumRange" DateFormat="d/M/yyyy" data-cy="datePicker">
+    <PickerActions>
+        <MudButton Class="mr-auto align-self-start" OnClick="@(() => _filterData._datePicker.Clear())" data-cy="clearButton">Wis</MudButton>
+        <MudButton OnClick="@(() => _filterData._datePicker.Close(false))" data-cy="cancelButton">Annuleer</MudButton>
+        <MudButton Color="Color.Primary" OnClick="@(() => _filterData._datePicker.Close())" data-cy="confirmButton">Bevestig</MudButton>
+    </PickerActions>
+</MudDateRangePicker>
+<MudGrid>
+    <MudItem>
+        <MudNumericField HideSpinButtons="true" @bind-Value="_filterData.Routenummer" Label="Routenummer" Variant="Variant.Text" Min="0" data-cy="routenummerField"/>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="_filterData.Laadbonnummer" Label="Laadbonnummer" Variant="Variant.Text" data-cy="laadbonnummerField"></MudTextField>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="_filterData.Transporteur" Label="Transporteur" Variant="Variant.Text" data-cy="transporteurField"></MudTextField>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="_filterData.Lader" Label="Lader" Variant="Variant.Text" data-cy="laderField"></MudTextField>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="_filterData.Nummerplaat" Label="Nummmerplaat" Variant="Variant.Text" data-cy="nummerplaatField"></MudTextField>
+    </MudItem>
+    @* //button to search *@
+    <MudItem >
+        <div style="display: flex; align-items: flex-end; justify-content: center; height: 100%;">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="HandelFilterChanged" data-cy="searchButton">Zoek</MudButton>
+        </div>
+    </MudItem>
+</MudGrid>

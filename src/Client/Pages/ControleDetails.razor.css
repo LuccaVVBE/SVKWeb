@@ -1,0 +1,68 @@
+﻿.container {
+    display: flex;
+}
+
+.left {
+    width: 50%;
+    align-self:center;
+    height:max-content;
+    
+    display: block;
+}
+
+
+.right {
+    width: 50%;
+        
+}
+
+.overlay {
+    height: max-content;
+    width: max-content;
+}
+
+
+.fotos-container {
+    display: grid;
+    text-align: center;
+    margin-top: 1.5%;
+    height: 100%;
+    overflow-y: scroll;
+    grid-template-columns: repeat(auto-fill, minmax(630px, 0.9fr));
+    grid-gap: 1%;
+    padding: 1%;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.fotos-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+
+.foto img{
+    padding:0.5%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    
+}
+
+table {
+    width: 100%;
+}
+td{
+    padding: 10px;
+}
+tr td:nth-child(1) {
+    padding-left: 10%;
+}
+
+tr td:nth-child(2) {
+    padding-left: 10%;
+}

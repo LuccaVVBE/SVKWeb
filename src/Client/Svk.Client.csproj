@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Svk' ">
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.25" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="MudBlazor" Version="6.11.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.25" />
+    <PackageReference Include="Bogus" Version="34.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Svk.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Shared\Fotos\ImageCarousel.razor" />
+    <Content Remove="wwwroot\images\" />
+    <Content Remove="wwwroot\fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Shared\Controles\" />
+  </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.AspNetCore.Authentication">
+            <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.25\Microsoft.AspNetCore.Authentication.dll</HintPath>
+        </Reference>
+  </ItemGroup>
+    <ItemGroup>
+      <None Include="Pages\ImageCarousel.razor" />
+    </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Shared\Users\LoaderDialog.cs">
+      <DependentUpon>LoaderDialog.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\Users\ManagerDialog.cs">
+      <DependentUpon>ManagerDialog.razor</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

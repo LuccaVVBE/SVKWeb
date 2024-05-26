@@ -1,0 +1,4 @@
+﻿@page "/managers"
+@using Svk.Client.Shared.Users;
+@attribute [Authorize(Roles = "Manager")]
+<ManagersTable/>

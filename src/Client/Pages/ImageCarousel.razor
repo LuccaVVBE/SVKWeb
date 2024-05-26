@@ -1,0 +1,27 @@
+﻿<MudPaper Height="80vh">
+<MudCarousel Class="mud-width-full" Style="height:100%; color:red; min-width:80vw;" SelectedIndex="@imgIndex" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+
+    @foreach(var foto in imgList){
+    <MudCarouselItem Transition="transition">
+       @*To stretch image: MudImage to Style="flex:auto" and remove justify-content:center from div below*@
+        <div class="d-flex" style="height:100%; justify-content:center;">
+            <MudImage Src="@foto" />"
+        </div>
+    </MudCarouselItem>
+    }
+ 
+</MudCarousel>
+   </MudPaper>
+   
+
+@code {
+    [Parameter]
+    public IEnumerable<string> imgList{ get; set; }
+    [Parameter]
+    public int imgIndex { get; set; }
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = false;
+    private bool autocycle = false;
+    private Transition transition = Transition.Slide;
+}

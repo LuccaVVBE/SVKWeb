@@ -1,0 +1,138 @@
+@page "/controles/{Id:int}"
+@using Svk.Shared.Controles
+@using Svk.Client.Shared.Fotos
+
+@attribute [Authorize(Roles = "Manager")]
+@inject ISnackbar Snackbar
+
+<MudCard>
+    <MudCardContent Class="d-flex">
+
+        <div class="left">
+            <table>
+                <tr>
+                    <td>
+                        <MudText Typo="Typo.h6">Route details: @_controle.Id</MudText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <MudText>Transporteur:</MudText>
+                    </td>
+                    <td>
+                        <MudText>@_controle.Transporteur</MudText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <MudText>Nummerplaat:</MudText>
+                    </td>
+                    <td>
+                        <MudText>@_controle.Nummerplaat</MudText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <MudText>Datum</MudText>
+                    </td>
+                    <td>
+                        <MudText>@_controle.Datum.ToString("dd/MM/yyyy HH:mm")</MudText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <MudText>Laadbonnen:</MudText>
+                    </td>
+
+                    <td>
+                        @foreach (var item in _controle.Laadbonnummers.Select(x => x.ToString()))
+                        {
+                            <MudText data-cy="laadbon">@item</MudText>
+                        }
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+            <div class="right d-none d-md-flex d-lg-flex">
+                <FotosToevoegen ControleId="@_controle.Id"/>
+            </div>
+        </MudHidden>
+    </MudCardContent>
+</MudCard>
+
+
+<div class="fotos-container mud-paper mud-elevation-3">
+    @foreach (var item in _controle.Fotos)
+    {
+        <div class="foto">
+            <img data-cy="img" src="@item" @onclick="() => { OpenOverlay(item); }"/>
+        </div>
+    }
+</div>
+
+<MudOverlay @bind-Visible="isVisible" DarkBackground="true" AutoClose="false" ZIndex="999">
+    <div style="text-align:right">
+        <MudButton OnClick="CloseOverlay">
+            <MudIcon Size=Size.Large Icon="@Icons.Material.Filled.Close" Style="color:red"/>
+        </MudButton>
+    </div>
+    <ImageCarousel imgList="@_controle.Fotos" imgIndex="@openImageIdx"/>
+</MudOverlay>
+
+
+@code {
+
+    [Inject] public IControleService ControleService { get; set; } = default!;
+
+    [Parameter] public int Id { get; set; }
+
+    private ControleDto.Detail _controle = new ControleDto.Detail()
+    {
+        Id = 1,
+        Transporteur = "Loading",
+        Nummerplaat = "Loading",
+        Datum = DateTime.Now,
+        Laadbonnummers = new List<int>(),
+        Fotos = new List<string>()
+    };
+
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            var result = await ControleService.GetDetailAsync(Id);
+            _controle = new ControleDto.Detail()
+                {
+                    Id = result.Id,
+                    Transporteur = result.Transporteur,
+                    Nummerplaat = result.Nummerplaat,
+                    //TODo null check
+                    Datum = result.Datum,
+                    Laadbonnummers = result.Laadbonnummers,
+                    Fotos = result.Fotos
+                };
+        }catch(Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        await base.OnInitializedAsync();
+    }
+
+    private bool isVisible;
+    private int openImageIdx;
+
+    public void OpenOverlay(string src)
+    {
+        isVisible = true;
+        //todo: openImageSrc = _controle.fotos.get(id);
+        openImageIdx = _controle.Fotos.ToList<string>().IndexOf(src);
+    }
+
+    private void CloseOverlay()
+    {
+        isVisible = false;
+    }
+
+}
